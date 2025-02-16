@@ -10,6 +10,7 @@ const Polls = () => {
     const dispatch = useDispatch()
   
     useEffect(() => {
+      dispatch(getPolls())
       const intId = setInterval(() => {
         dispatch(getPolls())
       }, 5000)
@@ -19,11 +20,11 @@ const Polls = () => {
       }
     }, [])
   
-    if (polls.length == 0){
-      return <div className="w-full h-screen justify-center items-center">
-        <h1>No polls to show</h1>
-      </div>
-    }
+    // if (polls.length == 0){
+    //   return <div className="w-full h-screen justify-center items-center">
+    //     <h1>No polls to show</h1>
+    //   </div>
+    // }
   
     if (loading){
       return <div className="w-full h-screen justify-center items-center">
@@ -38,7 +39,10 @@ const Polls = () => {
         <Link to="/create"  className="text-2xl text-teal-500 underline font-bold text-center mb-5 inline-block">Create Poll</Link>
         </div>
   
-        {polls.map((poll) => {
+        {polls.length == 0 ?
+        <h1>No polls to show</h1>
+         :
+         polls.map((poll) => {
           const showResults = answeredPollsId.includes(poll?._id)
           return (
             <div key={poll._id} className="border border-gray-400 rounded-lg p-4 mb-5 shadow-md">
