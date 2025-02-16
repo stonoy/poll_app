@@ -30,18 +30,29 @@ const voteAPoll = async(req,res) => {
     const {pollId} = req.params
     const {selectedOptionId} = req.body
 
-    const updatedPoll = await Poll.findOneAndUpdate(
-        { _id: pollId, "options._id": selectedOptionId }, 
-        { $inc: { "options.$.count": 1 } },
-        { new: true } 
-    );
+    // const updatedPoll = await Poll.findOneAndUpdate(
+    //     { _id: pollId, "options._id": selectedOptionId }, 
+    //     { $inc: { "options.$.count": 1 } },
+    //     { new: true } 
+    // );
 
-    if (!updatedPoll) {
-        createError("Poll or Option not found!", 400);
+    let thePoll = await Poll.findById(pollId)
+
+    if (!thePoll) {
+        createError("Poll not found!", 400);
         return;
     }
 
-    res.status(200).json({updatedPoll})
+    thePoll.options = thePoll.options.map(option => {
+        if (option._id == selectedOptionId){
+            return {...option, count: option.count+1}
+        }
+        return option
+    })
+
+    await thePoll.save()
+
+    res.status(200).json({updatedPoll:thePoll})
 }
 
 module.exports = {createPoll,getPolls,voteAPoll}
