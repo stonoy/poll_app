@@ -20,11 +20,15 @@ const Polls = () => {
     }, [])
   
     if (polls.length == 0){
-      return <h1>No polls to show</h1>
+      return <div className="w-full h-screen justify-center items-center">
+        <h1>No polls to show</h1>
+      </div>
     }
   
     if (loading){
-      return <h1>Loading...</h1>
+      return <div className="w-full h-screen justify-center items-center">
+        <h1>Loading...</h1>
+      </div>
     }
   
     return (

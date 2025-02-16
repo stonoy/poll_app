@@ -26,7 +26,7 @@ const Modal = () => {
         <div className='w-3/4 md:w-1/2 h-[70vh] bg-base-200 rounded-md p-4 flex flex-col justify-between items-center'>
         <h2 className="text-xl font-bold mb-4 text-center">Create a Poll</h2>
 
-<form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-2">
+<form ref={formRef} onSubmit={handleSubmit} className="flex w-full flex-col gap-2">
   <input
     type="text"
     name="question"
@@ -68,7 +68,7 @@ const Modal = () => {
     required
   />
 
-  <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded">
+  <button disabled={submitting} type="submit" className="w-full bg-blue-500 text-white py-2 rounded">
     Create Poll
   </button>
 </form>
